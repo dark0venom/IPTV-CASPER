@@ -31,18 +31,27 @@ class _DetachedPlayerWindowState extends State<DetachedPlayerWindow> {
     super.initState();
     // Set always on top by default for detached player
     if (Platform.isWindows || Platform.isMacOS || Platform.isLinux) {
-      _setAlwaysOnTop(true);
+      WidgetsBinding.instance.addPostFrameCallback((_) {
+        _setAlwaysOnTop(true);
+      });
     }
   }
 
   Future<void> _setAlwaysOnTop(bool alwaysOnTop) async {
+    if (!Platform.isWindows && !Platform.isMacOS && !Platform.isLinux) {
+      return;
+    }
+    
     try {
       await windowManager.setAlwaysOnTop(alwaysOnTop);
-      setState(() {
-        _isAlwaysOnTop = alwaysOnTop;
-      });
+      if (mounted) {
+        setState(() {
+          _isAlwaysOnTop = alwaysOnTop;
+        });
+      }
+      debugPrint('✅ Always on top set to: $alwaysOnTop');
     } catch (e) {
-      debugPrint('Error setting always on top: $e');
+      debugPrint('❌ Error setting always on top: $e');
     }
   }
 
@@ -54,8 +63,10 @@ class _DetachedPlayerWindowState extends State<DetachedPlayerWindow> {
   void dispose() {
     // Reset always on top when detached player is closed
     if (Platform.isWindows || Platform.isMacOS || Platform.isLinux) {
-      windowManager.setAlwaysOnTop(false).catchError((e) {
-        debugPrint('Error resetting always on top: $e');
+      windowManager.setAlwaysOnTop(false).then((_) {
+        debugPrint('✅ Always on top disabled on dispose');
+      }).catchError((e) {
+        debugPrint('❌ Error resetting always on top: $e');
       });
     }
     super.dispose();
@@ -198,9 +209,12 @@ class _DetachedPlayerWindowState extends State<DetachedPlayerWindow> {
                                   onPressed: () async {
                                     // Reset always on top before closing
                                     if (Platform.isWindows || Platform.isMacOS || Platform.isLinux) {
-                                      await windowManager.setAlwaysOnTop(false).catchError((e) {
-                                        debugPrint('Error resetting always on top: $e');
-                                      });
+                                      try {
+                                        await windowManager.setAlwaysOnTop(false);
+                                        debugPrint('✅ Always on top disabled before close');
+                                      } catch (e) {
+                                        debugPrint('❌ Error resetting always on top: $e');
+                                      }
                                     }
                                     widget.onClose?.call();
                                   },

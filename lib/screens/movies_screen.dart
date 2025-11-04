@@ -5,6 +5,7 @@ import '../providers/player_provider.dart';
 import '../models/vod_item.dart';
 import '../models/channel.dart';
 import '../utils/responsive.dart';
+import 'main_navigation_screen.dart';
 
 class MoviesScreen extends StatefulWidget {
   const MoviesScreen({super.key});
@@ -14,20 +15,57 @@ class MoviesScreen extends StatefulWidget {
 }
 
 class _MoviesScreenState extends State<MoviesScreen> {
+  bool _hasLoadedContent = false;
+
   @override
   void initState() {
     super.initState();
-    WidgetsBinding.instance.addPostFrameCallback((_) async {
-      final contentProvider = Provider.of<ContentProvider>(context, listen: false);
-      // Load categories if empty
-      if (contentProvider.vodCategories.isEmpty) {
-        await contentProvider.loadVodCategories();
-      }
-      // Load items if empty
-      if (contentProvider.vodItems.isEmpty) {
-        await contentProvider.loadVodItems();
-      }
-    });
+    _loadContentIfReady();
+  }
+
+  @override
+  void didChangeDependencies() {
+    super.didChangeDependencies();
+    // Try to load content when dependencies change (e.g., when API client becomes available)
+    if (!_hasLoadedContent) {
+      _loadContentIfReady();
+    }
+  }
+
+  Future<void> _loadContentIfReady() async {
+    debugPrint('🎬 MoviesScreen._loadContentIfReady called');
+    final contentProvider = Provider.of<ContentProvider>(context, listen: false);
+    
+    debugPrint('🎬 MoviesScreen: hasApiClient = ${contentProvider.hasApiClient}');
+    
+    // Check if API client is available
+    if (!contentProvider.hasApiClient) {
+      debugPrint('⚠️ MoviesScreen: API client not yet available, will retry on didChangeDependencies');
+      return;
+    }
+
+    // Prevent multiple simultaneous loads
+    if (_hasLoadedContent) {
+      debugPrint('🎬 MoviesScreen: Content already loaded, skipping');
+      return;
+    }
+    _hasLoadedContent = true;
+
+    debugPrint('🎬 MoviesScreen: Loading VOD content...');
+    
+    // Load categories if empty
+    if (contentProvider.vodCategories.isEmpty) {
+      debugPrint('🎬 MoviesScreen: Loading categories...');
+      await contentProvider.loadVodCategories();
+      debugPrint('✅ MoviesScreen: Loaded ${contentProvider.vodCategories.length} VOD categories');
+    }
+    
+    // Load items if empty
+    if (contentProvider.vodItems.isEmpty) {
+      debugPrint('🎬 MoviesScreen: Loading items...');
+      await contentProvider.loadVodItems();
+      debugPrint('✅ MoviesScreen: Loaded ${contentProvider.vodItems.length} VOD items');
+    }
   }
 
   @override
@@ -39,6 +77,14 @@ class _MoviesScreenState extends State<MoviesScreen> {
     return Scaffold(
       appBar: AppBar(
         title: const Text('Movies'),
+        leading: IconButton(
+          icon: const Icon(Icons.home),
+          tooltip: 'Back to Live TV',
+          onPressed: () {
+            // Navigate to Live TV tab (index 0)
+            mainNavigationKey.currentState?.navigateToTab(0);
+          },
+        ),
         actions: [
           if (contentProvider.vodCategories.isNotEmpty)
             PopupMenuButton<String>(
@@ -72,15 +118,33 @@ class _MoviesScreenState extends State<MoviesScreen> {
             icon: const Icon(Icons.refresh),
             tooltip: 'Refresh',
             onPressed: () async {
-              // Reload categories if empty
-              if (contentProvider.vodCategories.isEmpty) {
-                await contentProvider.loadVodCategories();
-              }
+              // Show loading indicator
+              ScaffoldMessenger.of(context).showSnackBar(
+                const SnackBar(
+                  content: Text('Refreshing movies...'),
+                  duration: Duration(seconds: 1),
+                ),
+              );
+              
+              // Reload categories
+              await contentProvider.loadVodCategories();
+              
               // Reload items
               final categoryId = contentProvider.selectedVodCategoryId;
               await contentProvider.loadVodItems(
                 categoryId: categoryId == 'all' ? null : categoryId,
               );
+              
+              if (mounted) {
+                ScaffoldMessenger.of(context).showSnackBar(
+                  SnackBar(
+                    content: Text(
+                      'Loaded ${contentProvider.filteredVodItems.length} movies',
+                    ),
+                    duration: const Duration(seconds: 2),
+                  ),
+                );
+              }
             },
           ),
         ],
@@ -90,9 +154,9 @@ class _MoviesScreenState extends State<MoviesScreen> {
           : contentProvider.filteredVodItems.isEmpty
               ? RefreshIndicator(
                   onRefresh: () async {
-                    if (contentProvider.vodCategories.isEmpty) {
-                      await contentProvider.loadVodCategories();
-                    }
+                    // Always reload categories
+                    await contentProvider.loadVodCategories();
+                    // Reload items
                     final categoryId = contentProvider.selectedVodCategoryId;
                     await contentProvider.loadVodItems(
                       categoryId: categoryId == 'all' ? null : categoryId,
@@ -107,18 +171,24 @@ class _MoviesScreenState extends State<MoviesScreen> {
                           mainAxisAlignment: MainAxisAlignment.center,
                           children: [
                             Icon(
-                              Icons.movie_outlined,
+                              contentProvider.hasApiClient 
+                                  ? Icons.movie_outlined 
+                                  : Icons.cloud_off_outlined,
                               size: 64,
                               color: Theme.of(context).colorScheme.outline,
                             ),
                             const SizedBox(height: 16),
                             Text(
-                              'No movies available',
+                              contentProvider.hasApiClient
+                                  ? 'No movies available'
+                                  : 'Not connected',
                               style: Theme.of(context).textTheme.titleLarge,
                             ),
                             const SizedBox(height: 8),
                             Text(
-                              'Pull down to refresh or tap the refresh button',
+                              contentProvider.hasApiClient
+                                  ? 'Pull down to refresh or tap the refresh button'
+                                  : 'Add an Xtream Codes playlist in Settings to view movies',
                               style: Theme.of(context).textTheme.bodyMedium?.copyWith(
                                     color: Theme.of(context).colorScheme.outline,
                                   ),
@@ -132,6 +202,9 @@ class _MoviesScreenState extends State<MoviesScreen> {
                 )
               : RefreshIndicator(
                   onRefresh: () async {
+                    // Reload categories
+                    await contentProvider.loadVodCategories();
+                    // Reload items
                     final categoryId = contentProvider.selectedVodCategoryId;
                     await contentProvider.loadVodItems(
                       categoryId: categoryId == 'all' ? null : categoryId,

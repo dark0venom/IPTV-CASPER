@@ -1,3 +1,4 @@
+import 'dart:io';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:provider/provider.dart';
@@ -102,6 +103,12 @@ class _HomeScreenState extends State<HomeScreen> with SingleTickerProviderStateM
 
     final success = await PipService.enterPip();
     if (success) {
+      // For Windows/Desktop, show the detached player window
+      if (Platform.isWindows || Platform.isLinux || Platform.isMacOS) {
+        setState(() {
+          _showDetachedPlayer = true;
+        });
+      }
       playerProvider.setDetached(true);
     } else {
       if (mounted) {

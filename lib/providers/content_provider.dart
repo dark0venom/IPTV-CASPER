@@ -5,7 +5,7 @@ import '../services/xtream_api_client.dart';
 
 /// Provider for managing VOD (Movies) and Series content
 class ContentProvider with ChangeNotifier {
-  final XtreamApiClient? _apiClient;
+  XtreamApiClient? _apiClient;
   
   // VOD
   List<VodItem> _vodItems = [];
@@ -24,6 +24,18 @@ class ContentProvider with ChangeNotifier {
   final Set<String> _favoriteSeriesIds = {};
   
   ContentProvider(this._apiClient);
+
+  /// Update the API client
+  void updateApiClient(XtreamApiClient? apiClient) {
+    if (_apiClient != apiClient) {
+      _apiClient = apiClient;
+      debugPrint('🎬 ContentProvider: API client updated');
+      notifyListeners();
+    }
+  }
+
+  /// Check if API client is available
+  bool get hasApiClient => _apiClient != null;
 
   // VOD Getters
   List<VodItem> get vodItems => _vodItems;
@@ -61,37 +73,60 @@ class ContentProvider with ChangeNotifier {
 
   /// Load VOD categories
   Future<void> loadVodCategories() async {
-    if (_apiClient == null) return;
+    if (_apiClient == null) {
+      debugPrint('⚠️ ContentProvider.loadVodCategories: API client is null');
+      return;
+    }
     
+    debugPrint('📥 ContentProvider.loadVodCategories: Starting load');
     try {
-      _vodCategories = await _apiClient!.getVodCategories();
+      final categories = await _apiClient!.getVodCategories();
+      debugPrint('✅ ContentProvider.loadVodCategories: Received ${categories.length} categories');
+      
+      _vodCategories = categories;
       // Add "All" category at the beginning
       _vodCategories.insert(0, {
         'category_id': 'all',
         'category_name': 'All Movies',
         'parent_id': 0,
       });
+      debugPrint('✅ ContentProvider.loadVodCategories: Set _vodCategories to ${_vodCategories.length} categories');
+      
       notifyListeners();
+      debugPrint('✅ ContentProvider.loadVodCategories: Complete');
     } catch (e) {
-      debugPrint('Error loading VOD categories: $e');
+      debugPrint('❌ ContentProvider.loadVodCategories: Error: $e');
+      _vodCategories = [];
     }
   }
 
   /// Load VOD items
   Future<void> loadVodItems({String? categoryId}) async {
-    if (_apiClient == null) return;
+    if (_apiClient == null) {
+      debugPrint('⚠️ ContentProvider.loadVodItems: API client is null');
+      return;
+    }
     
+    debugPrint('📥 ContentProvider.loadVodItems: Starting load (category: ${categoryId ?? "all"})');
     _isLoadingVod = true;
     notifyListeners();
     
     try {
-      _vodItems = await _apiClient!.getVodItems(categoryId: categoryId);
+      final items = await _apiClient!.getVodItems(categoryId: categoryId);
+      debugPrint('✅ ContentProvider.loadVodItems: Received ${items.length} items from API');
+      
+      _vodItems = items;
+      debugPrint('✅ ContentProvider.loadVodItems: Set _vodItems to ${_vodItems.length} items');
+      
       notifyListeners();
+      debugPrint('✅ ContentProvider.loadVodItems: Notified listeners');
     } catch (e) {
-      debugPrint('Error loading VOD items: $e');
+      debugPrint('❌ ContentProvider.loadVodItems: Error loading VOD items: $e');
+      _vodItems = [];
     } finally {
       _isLoadingVod = false;
       notifyListeners();
+      debugPrint('✅ ContentProvider.loadVodItems: Complete (total items: ${_vodItems.length})');
     }
   }
 
@@ -110,37 +145,60 @@ class ContentProvider with ChangeNotifier {
 
   /// Load series categories
   Future<void> loadSeriesCategories() async {
-    if (_apiClient == null) return;
+    if (_apiClient == null) {
+      debugPrint('⚠️ ContentProvider.loadSeriesCategories: API client is null');
+      return;
+    }
     
+    debugPrint('📥 ContentProvider.loadSeriesCategories: Starting load');
     try {
-      _seriesCategories = await _apiClient!.getSeriesCategories();
+      final categories = await _apiClient!.getSeriesCategories();
+      debugPrint('✅ ContentProvider.loadSeriesCategories: Received ${categories.length} categories');
+      
+      _seriesCategories = categories;
       // Add "All" category at the beginning
       _seriesCategories.insert(0, {
         'category_id': 'all',
         'category_name': 'All Series',
         'parent_id': 0,
       });
+      debugPrint('✅ ContentProvider.loadSeriesCategories: Set _seriesCategories to ${_seriesCategories.length} categories');
+      
       notifyListeners();
+      debugPrint('✅ ContentProvider.loadSeriesCategories: Complete');
     } catch (e) {
-      debugPrint('Error loading series categories: $e');
+      debugPrint('❌ ContentProvider.loadSeriesCategories: Error: $e');
+      _seriesCategories = [];
     }
   }
 
   /// Load series items
   Future<void> loadSeriesItems({String? categoryId}) async {
-    if (_apiClient == null) return;
+    if (_apiClient == null) {
+      debugPrint('⚠️ ContentProvider.loadSeriesItems: API client is null');
+      return;
+    }
     
+    debugPrint('📥 ContentProvider.loadSeriesItems: Starting load (category: ${categoryId ?? "all"})');
     _isLoadingSeries = true;
     notifyListeners();
     
     try {
-      _seriesItems = await _apiClient!.getSeriesItems(categoryId: categoryId);
+      final items = await _apiClient!.getSeriesItems(categoryId: categoryId);
+      debugPrint('✅ ContentProvider.loadSeriesItems: Received ${items.length} items from API');
+      
+      _seriesItems = items;
+      debugPrint('✅ ContentProvider.loadSeriesItems: Set _seriesItems to ${_seriesItems.length} items');
+      
       notifyListeners();
+      debugPrint('✅ ContentProvider.loadSeriesItems: Notified listeners');
     } catch (e) {
-      debugPrint('Error loading series items: $e');
+      debugPrint('❌ ContentProvider.loadSeriesItems: Error loading series items: $e');
+      _seriesItems = [];
     } finally {
       _isLoadingSeries = false;
       notifyListeners();
+      debugPrint('✅ ContentProvider.loadSeriesItems: Complete (total items: ${_seriesItems.length})');
     }
   }
 

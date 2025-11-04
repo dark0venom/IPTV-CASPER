@@ -474,10 +474,12 @@ class _AddPlaylistDialogState extends State<AddPlaylistDialog> with SingleTicker
           break;
         case 1: // Xtream Codes
           final xtreamUrl = _buildXtreamCodesUrl();
-          // Don't pass credentials again - they're already in the URL
+          // Pass credentials separately so they can be stored and used for API calls
           await playlistProvider.loadPlaylistFromUrl(
             xtreamUrl,
             _nameController.text,
+            username: _xtreamUsernameController.text,
+            password: _xtreamPasswordController.text,
           );
           break;
         case 2: // Local File

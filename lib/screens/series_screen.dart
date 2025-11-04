@@ -5,6 +5,7 @@ import '../providers/player_provider.dart';
 import '../models/series_item.dart';
 import '../models/channel.dart';
 import '../utils/responsive.dart';
+import 'main_navigation_screen.dart';
 
 class SeriesScreen extends StatefulWidget {
   const SeriesScreen({super.key});
@@ -14,20 +15,49 @@ class SeriesScreen extends StatefulWidget {
 }
 
 class _SeriesScreenState extends State<SeriesScreen> {
+  bool _hasLoadedContent = false;
+
   @override
   void initState() {
     super.initState();
-    WidgetsBinding.instance.addPostFrameCallback((_) async {
-      final contentProvider = Provider.of<ContentProvider>(context, listen: false);
-      // Load categories if empty
-      if (contentProvider.seriesCategories.isEmpty) {
-        await contentProvider.loadSeriesCategories();
-      }
-      // Load items if empty
-      if (contentProvider.seriesItems.isEmpty) {
-        await contentProvider.loadSeriesItems();
-      }
-    });
+    _loadContentIfReady();
+  }
+
+  @override
+  void didChangeDependencies() {
+    super.didChangeDependencies();
+    // Try to load content when dependencies change (e.g., when API client becomes available)
+    if (!_hasLoadedContent) {
+      _loadContentIfReady();
+    }
+  }
+
+  Future<void> _loadContentIfReady() async {
+    final contentProvider = Provider.of<ContentProvider>(context, listen: false);
+    
+    // Check if API client is available
+    if (!contentProvider.hasApiClient) {
+      debugPrint('⚠️ SeriesScreen: API client not yet available');
+      return;
+    }
+
+    // Prevent multiple simultaneous loads
+    if (_hasLoadedContent) return;
+    _hasLoadedContent = true;
+
+    debugPrint('📺 SeriesScreen: Loading series content...');
+    
+    // Load categories if empty
+    if (contentProvider.seriesCategories.isEmpty) {
+      await contentProvider.loadSeriesCategories();
+      debugPrint('✅ Loaded ${contentProvider.seriesCategories.length} series categories');
+    }
+    
+    // Load items if empty
+    if (contentProvider.seriesItems.isEmpty) {
+      await contentProvider.loadSeriesItems();
+      debugPrint('✅ Loaded ${contentProvider.seriesItems.length} series');
+    }
   }
 
   @override
@@ -39,6 +69,14 @@ class _SeriesScreenState extends State<SeriesScreen> {
     return Scaffold(
       appBar: AppBar(
         title: const Text('TV Series'),
+        leading: IconButton(
+          icon: const Icon(Icons.home),
+          tooltip: 'Back to Live TV',
+          onPressed: () {
+            // Navigate to Live TV tab (index 0)
+            mainNavigationKey.currentState?.navigateToTab(0);
+          },
+        ),
         actions: [
           if (contentProvider.seriesCategories.isNotEmpty)
             PopupMenuButton<String>(
@@ -72,15 +110,33 @@ class _SeriesScreenState extends State<SeriesScreen> {
             icon: const Icon(Icons.refresh),
             tooltip: 'Refresh',
             onPressed: () async {
-              // Reload categories if empty
-              if (contentProvider.seriesCategories.isEmpty) {
-                await contentProvider.loadSeriesCategories();
-              }
+              // Show loading indicator
+              ScaffoldMessenger.of(context).showSnackBar(
+                const SnackBar(
+                  content: Text('Refreshing TV series...'),
+                  duration: Duration(seconds: 1),
+                ),
+              );
+              
+              // Reload categories
+              await contentProvider.loadSeriesCategories();
+              
               // Reload items
               final categoryId = contentProvider.selectedSeriesCategoryId;
               await contentProvider.loadSeriesItems(
                 categoryId: categoryId == 'all' ? null : categoryId,
               );
+              
+              if (mounted) {
+                ScaffoldMessenger.of(context).showSnackBar(
+                  SnackBar(
+                    content: Text(
+                      'Loaded ${contentProvider.filteredSeriesItems.length} series',
+                    ),
+                    duration: const Duration(seconds: 2),
+                  ),
+                );
+              }
             },
           ),
         ],
@@ -90,9 +146,9 @@ class _SeriesScreenState extends State<SeriesScreen> {
           : contentProvider.filteredSeriesItems.isEmpty
               ? RefreshIndicator(
                   onRefresh: () async {
-                    if (contentProvider.seriesCategories.isEmpty) {
-                      await contentProvider.loadSeriesCategories();
-                    }
+                    // Always reload categories
+                    await contentProvider.loadSeriesCategories();
+                    // Reload items
                     final categoryId = contentProvider.selectedSeriesCategoryId;
                     await contentProvider.loadSeriesItems(
                       categoryId: categoryId == 'all' ? null : categoryId,
@@ -107,18 +163,24 @@ class _SeriesScreenState extends State<SeriesScreen> {
                           mainAxisAlignment: MainAxisAlignment.center,
                           children: [
                             Icon(
-                              Icons.tv,
+                              contentProvider.hasApiClient 
+                                  ? Icons.tv 
+                                  : Icons.cloud_off_outlined,
                               size: 64,
                               color: Theme.of(context).colorScheme.outline,
                             ),
                             const SizedBox(height: 16),
                             Text(
-                              'No TV series available',
+                              contentProvider.hasApiClient
+                                  ? 'No TV series available'
+                                  : 'Not connected',
                               style: Theme.of(context).textTheme.titleLarge,
                             ),
                             const SizedBox(height: 8),
                             Text(
-                              'Pull down to refresh or tap the refresh button',
+                              contentProvider.hasApiClient
+                                  ? 'Pull down to refresh or tap the refresh button'
+                                  : 'Add an Xtream Codes playlist in Settings to view series',
                               style: Theme.of(context).textTheme.bodyMedium?.copyWith(
                                     color: Theme.of(context).colorScheme.outline,
                                   ),
@@ -132,6 +194,9 @@ class _SeriesScreenState extends State<SeriesScreen> {
                 )
               : RefreshIndicator(
                   onRefresh: () async {
+                    // Reload categories
+                    await contentProvider.loadSeriesCategories();
+                    // Reload items
                     final categoryId = contentProvider.selectedSeriesCategoryId;
                     await contentProvider.loadSeriesItems(
                       categoryId: categoryId == 'all' ? null : categoryId,

@@ -31,6 +31,8 @@ class PlaylistProvider with ChangeNotifier {
   String? get selectedGroup => _selectedGroup;
   bool get showFavoritesOnly => _showFavoritesOnly;
   bool get isLoading => _isLoading;
+  bool _isInitialized = false;
+  bool get isInitialized => _isInitialized;
 
   PlaylistProvider() {
     _initializeAndLoad();
@@ -40,6 +42,8 @@ class PlaylistProvider with ChangeNotifier {
   Future<void> _initializeAndLoad() async {
     await _encryptionService.initialize();
     await _loadFromStorage();
+    _isInitialized = true;
+    notifyListeners();
   }
 
   Future<void> _loadFromStorage() async {
@@ -279,6 +283,30 @@ class PlaylistProvider with ChangeNotifier {
         playlist.filePath!,
         playlist.name,
       );
+    }
+  }
+
+  /// Get decrypted credentials for a playlist
+  Future<Map<String, String>?> getDecryptedCredentials(Playlist playlist) async {
+    if (playlist.username == null && playlist.password == null) {
+      return null;
+    }
+    
+    if (playlist.isEncrypted) {
+      final decrypted = await _encryptionService.decryptCredentials(
+        encryptedUsername: playlist.username,
+        encryptedPassword: playlist.password,
+      );
+      return {
+        'username': decrypted['username'] ?? '',
+        'password': decrypted['password'] ?? '',
+      };
+    } else {
+      // Return plain text credentials (backward compatibility)
+      return {
+        'username': playlist.username ?? '',
+        'password': playlist.password ?? '',
+      };
     }
   }
 

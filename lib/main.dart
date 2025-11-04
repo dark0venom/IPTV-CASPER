@@ -49,37 +49,7 @@ class MyApp extends StatelessWidget {
         ChangeNotifierProvider(create: (_) => PlaylistProvider()),
         ChangeNotifierProvider(create: (_) => PlayerProvider()),
         ChangeNotifierProvider(create: (_) => SettingsProvider()),
-        ChangeNotifierProxyProvider<PlaylistProvider, ContentProvider>(
-          create: (context) => ContentProvider(null),
-          update: (context, playlistProvider, previous) {
-            // Try to find a valid Xtream playlist
-            XtreamApiClient? apiClient;
-            
-            for (final playlist in playlistProvider.playlists) {
-              if (playlist.username != null && playlist.password != null && playlist.url != null) {
-                try {
-                  // Parse the URL to extract base URL
-                  final uri = Uri.parse(playlist.url!);
-                  String baseUrl = '${uri.scheme}://${uri.host}';
-                  if (uri.hasPort) baseUrl += ':${uri.port}';
-                  
-                  // Create XtreamApiClient
-                  apiClient = XtreamApiClient(
-                    serverUrl: baseUrl,
-                    username: playlist.username!,
-                    password: playlist.password!,
-                  );
-                  
-                  break; // Use first valid playlist
-                } catch (e) {
-                  debugPrint('Error parsing playlist URL: $e');
-                }
-              }
-            }
-            
-            return ContentProvider(apiClient);
-          },
-        ),
+        ChangeNotifierProvider(create: (_) => ContentProvider(null)),
       ],
       child: Consumer<SettingsProvider>(
         builder: (context, settings, _) {
@@ -89,7 +59,7 @@ class MyApp extends StatelessWidget {
             themeMode: settings.isDarkMode ? ThemeMode.dark : ThemeMode.light,
             theme: AppTheme.lightTheme,
             darkTheme: AppTheme.darkTheme,
-            home: const MainNavigationScreen(),
+            home: MainNavigationScreen(key: mainNavigationKey),
           );
         },
       ),
