@@ -1,0 +1,141 @@
+
+   ██╗██████╗ ████████╗██╗   ██╗     ██████╗ █████╗ ███████╗██████╗ ███████╗██████╗ 
+   ██║██╔══██╗╚══██╔══╝██║   ██║    ██╔════╝██╔══██╗██╔════╝██╔══██╗██╔════╝██╔══██╗
+   ██║██████╔╝   ██║   ██║   ██║    ██║     ███████║███████╗██████╔╝█████╗  ██████╔╝
+   ██║██╔═══╝    ██║   ╚██╗ ██╔╝    ██║     ██╔══██║╚════██║██╔═══╝ ██╔══╝  ██╔══██╗
+   ██║██║        ██║    ╚████╔╝     ╚██████╗██║  ██║███████║██║     ███████╗██║  ██║
+   ╚═╝╚═╝        ╚═╝     ╚═══╝       ╚═════╝╚═╝  ╚═╝╚══════╝╚═╝     ╚══════╝╚═╝  ╚═╝
+
+   ═══════════════════════════════════════════════════════════════════════════════════
+                          Windows IPTV Player Built with Flutter
+   ═══════════════════════════════════════════════════════════════════════════════════
+
+   ✨ FEATURES:
+
+      📺  High-Performance Video Playback      🎬  Full Player Controls
+      📋  Unlimited Channels                   ⭐  Favorites System
+      🔍  Search & Filter                      📂  M3U/M3U8 Support
+      🎨  Modern Dark Theme                    💾  Persistent Storage
+      ⚙️   Customizable Settings               🖥️  Windows Native
+
+   ═══════════════════════════════════════════════════════════════════════════════════
+
+   📖 DOCUMENTATION:
+
+      START_HERE.txt             → Read this first!
+      INSTALL.md                 → Flutter installation guide
+      QUICKSTART.md              → Quick reference card
+      SETUP.md                   → How to use the app
+      IMPLEMENTATION_GUIDE.md    → Technical details
+
+   ═══════════════════════════════════════════════════════════════════════════════════
+
+   🚀 QUICK START:
+
+      1. Install Flutter SDK
+         https://docs.flutter.dev/get-started/install/windows
+
+      2. Open PowerShell in this folder
+
+      3. Run setup script:
+         .\setup.ps1
+
+      4. Choose option 1 to run the app
+
+      5. Add a playlist and start watching!
+
+   ═══════════════════════════════════════════════════════════════════════════════════
+
+   ⚡ ALTERNATIVE QUICK START:
+
+      If Flutter is already installed:
+
+      flutter pub get              ← Install dependencies
+      flutter run -d windows       ← Run the application
+
+   ═══════════════════════════════════════════════════════════════════════════════════
+
+   📁 PROJECT STRUCTURE:
+
+      lib/                         → Application source code
+      ├── main.dart               → Entry point
+      ├── models/                 → Data models (Channel, Playlist)
+      ├── providers/              → State management
+      ├── screens/                → UI screens
+      ├── services/               → Business logic (M3U Parser)
+      └── widgets/                → Reusable components
+
+      windows/                     → Windows platform files
+      test/                        → Unit tests
+      sample_playlist.m3u          → Sample playlist for testing
+
+   ═══════════════════════════════════════════════════════════════════════════════════
+
+   🎯 HOW TO USE:
+
+      Adding Playlists:
+      • Click the + button
+      • Choose URL or File
+      • Load sample_playlist.m3u to test
+      • Or use your own M3U playlist
+
+      Watching Channels:
+      • Browse the channel list
+      • Search for specific channels
+      • Filter by category
+      • Click to play
+      • Use controls (play, pause, volume, fullscreen)
+
+      Managing Favorites:
+      • Click the star icon on any channel
+      • Use star filter to show favorites only
+
+   ═══════════════════════════════════════════════════════════════════════════════════
+
+   💡 TIPS:
+
+      • Try the sample_playlist.m3u first
+      • Use Ctrl+F to search within the app
+      • Double-click video for fullscreen
+      • Check Settings for customization options
+      • Favorites are saved automatically
+
+   ═══════════════════════════════════════════════════════════════════════════════════
+
+   🔧 REQUIREMENTS:
+
+      ✓ Windows 10 or Windows 11
+      ✓ Flutter SDK 3.0.0 or higher
+      ✓ Visual Studio with C++ build tools
+      ✓ Internet connection (for streaming)
+
+   ═══════════════════════════════════════════════════════════════════════════════════
+
+   📞 TROUBLESHOOTING:
+
+      Issue: "Flutter not found"
+      → Install Flutter and add to PATH, then restart terminal
+
+      Issue: "Build failed"
+      → Run: flutter doctor
+      → Fix any reported issues
+
+      Issue: "Video won't play"
+      → Check stream URL and internet connection
+      → Try sample playlist first
+
+      Issue: "No channels showing"
+      → Click + to add a playlist
+      → Use sample_playlist.m3u for testing
+
+   ═══════════════════════════════════════════════════════════════════════════════════
+
+   🎉 READY TO START!
+
+      Read START_HERE.txt for detailed instructions
+      Or run: .\setup.ps1 to begin
+
+      Enjoy your IPTV player! 📺✨
+
+   ═══════════════════════════════════════════════════════════════════════════════════
+
