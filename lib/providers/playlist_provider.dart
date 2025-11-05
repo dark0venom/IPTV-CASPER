@@ -248,6 +248,20 @@ class PlaylistProvider with ChangeNotifier {
 
   Future<void> removePlaylist(Playlist playlist) async {
     _playlists.remove(playlist);
+    
+    // If this was the only/last playlist, clear all channels
+    if (_playlists.isEmpty) {
+      _channels.clear();
+      _filteredChannels.clear();
+      _selectedGroup = null;
+      _searchQuery = '';
+      _showFavoritesOnly = false;
+    } else {
+      // If there are other playlists, reload the first one to show its channels
+      final firstPlaylist = _playlists.first;
+      await reloadPlaylist(firstPlaylist);
+    }
+    
     await _saveToStorage();
     notifyListeners();
   }

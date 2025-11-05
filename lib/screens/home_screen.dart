@@ -6,10 +6,10 @@ import '../providers/playlist_provider.dart';
 import '../providers/player_provider.dart';
 import '../widgets/channel_list.dart';
 import '../widgets/video_player_widget.dart';
-import '../widgets/add_playlist_dialog.dart';
 import '../widgets/mobile_channel_drawer.dart';
 import '../widgets/mini_player.dart';
 import '../widgets/detached_player_window.dart';
+import '../widgets/add_playlist_dialog.dart';
 import '../utils/responsive.dart';
 import '../services/pip_service.dart';
 import '../services/floating_window_service.dart';
@@ -47,6 +47,13 @@ class _HomeScreenState extends State<HomeScreen> with SingleTickerProviderStateM
   void dispose() {
     _fabAnimationController.dispose();
     super.dispose();
+  }
+
+  void _showAddPlaylistDialog() {
+    showDialog(
+      context: context,
+      builder: (context) => const AddPlaylistDialog(),
+    );
   }
 
   void _toggleFullScreen() {
@@ -249,15 +256,29 @@ class _HomeScreenState extends State<HomeScreen> with SingleTickerProviderStateM
                           ),
                           const SizedBox(height: AppSpacing.lg),
                           Text(
-                            'Select a channel to start',
+                            'No channel selected',
                             style: Theme.of(context).textTheme.titleLarge,
                           ),
-                          const SizedBox(height: AppSpacing.xl),
-                          ElevatedButton.icon(
-                            icon: const Icon(Icons.add),
-                            label: const Text('Add Playlist'),
-                            onPressed: () => _showAddPlaylistDialog(context),
-                          ),
+                          const SizedBox(height: AppSpacing.md),
+                          if (playlistProvider.playlists.isEmpty)
+                            ElevatedButton.icon(
+                              onPressed: _showAddPlaylistDialog,
+                              icon: const Icon(Icons.add),
+                              label: const Text('Add Playlist'),
+                              style: ElevatedButton.styleFrom(
+                                padding: const EdgeInsets.symmetric(
+                                  horizontal: 24,
+                                  vertical: 12,
+                                ),
+                              ),
+                            )
+                          else
+                            Text(
+                              'Select a channel from the list to start watching',
+                              style: Theme.of(context).textTheme.bodyMedium?.copyWith(
+                                color: Colors.grey,
+                              ),
+                            ),
                         ],
                       ),
                     ),
@@ -271,16 +292,15 @@ class _HomeScreenState extends State<HomeScreen> with SingleTickerProviderStateM
               ),
           ],
         ),
-        floatingActionButton: playlistProvider.channels.isEmpty
-            ? ScaleTransition(
-                scale: _fabAnimation,
-                child: FloatingActionButton.extended(
-                  onPressed: () => _showAddPlaylistDialog(context),
-                  icon: const Icon(Icons.add),
-                  label: const Text('Add Playlist'),
-                ),
-              )
-            : null,
+        floatingActionButton: ScaleTransition(
+          scale: _fabAnimation,
+          child: FloatingActionButton.extended(
+            onPressed: _showAddPlaylistDialog,
+            icon: const Icon(Icons.add),
+            label: const Text('Add Playlist'),
+            tooltip: 'Add Playlist',
+          ),
+        ),
       );
     }
 
@@ -325,20 +345,15 @@ class _HomeScreenState extends State<HomeScreen> with SingleTickerProviderStateM
                 tooltip: 'Picture-in-Picture',
               ),
             IconButton(
-              icon: const Icon(Icons.fullscreen),
-              onPressed: _toggleFullScreen,
-              tooltip: 'Fullscreen',
+              icon: const Icon(Icons.refresh),
+              onPressed: () {
+                if (playerProvider.currentChannel != null) {
+                  playerProvider.playChannel(playerProvider.currentChannel!);
+                }
+              },
+              tooltip: 'Refresh',
             ),
           ],
-          IconButton(
-            icon: const Icon(Icons.refresh),
-            onPressed: () {
-              if (playerProvider.currentChannel != null) {
-                playerProvider.playChannel(playerProvider.currentChannel!);
-              }
-            },
-            tooltip: 'Refresh',
-          ),
           IconButton(
             icon: const Icon(Icons.settings),
             onPressed: () {
@@ -435,32 +450,8 @@ class _HomeScreenState extends State<HomeScreen> with SingleTickerProviderStateM
                 ),
                 const Divider(height: 1),
                 // Channel list
-                Expanded(
-                  child: playlistProvider.channels.isEmpty
-                      ? Center(
-                          child: Column(
-                            mainAxisAlignment: MainAxisAlignment.center,
-                            children: [
-                              Icon(
-                                Icons.playlist_play,
-                                size: 64,
-                                color: Theme.of(context).disabledColor,
-                              ),
-                              const SizedBox(height: AppSpacing.lg),
-                              Text(
-                                'No channels loaded',
-                                style: Theme.of(context).textTheme.titleLarge,
-                              ),
-                              const SizedBox(height: AppSpacing.sm),
-                              ElevatedButton.icon(
-                                onPressed: () => _showAddPlaylistDialog(context),
-                                icon: const Icon(Icons.add),
-                                label: const Text('Add Playlist'),
-                              ),
-                            ],
-                          ),
-                        )
-                      : const ChannelList(),
+                const Expanded(
+                  child: ChannelList(),
                 ),
               ],
             ),
@@ -487,22 +478,30 @@ class _HomeScreenState extends State<HomeScreen> with SingleTickerProviderStateM
                               Text(
                                 _showDetachedPlayer
                                     ? 'Player is detached'
-                                    : 'Select a channel to start watching',
+                                    : 'No channel selected',
                                 style: Theme.of(context).textTheme.headlineSmall,
                               ),
                               if (!_showDetachedPlayer) ...[
-                                const SizedBox(height: AppSpacing.xxl),
-                                ElevatedButton.icon(
-                                  icon: const Icon(Icons.add),
-                                  label: const Text('Add Playlist'),
-                                  style: ElevatedButton.styleFrom(
-                                    padding: const EdgeInsets.symmetric(
-                                      horizontal: AppSpacing.xl,
-                                      vertical: AppSpacing.md,
+                                const SizedBox(height: AppSpacing.md),
+                                if (playlistProvider.playlists.isEmpty)
+                                  ElevatedButton.icon(
+                                    onPressed: _showAddPlaylistDialog,
+                                    icon: const Icon(Icons.add),
+                                    label: const Text('Add Playlist'),
+                                    style: ElevatedButton.styleFrom(
+                                      padding: const EdgeInsets.symmetric(
+                                        horizontal: 32,
+                                        vertical: 16,
+                                      ),
+                                    ),
+                                  )
+                                else
+                                  Text(
+                                    'Select a channel from the list to start watching',
+                                    style: Theme.of(context).textTheme.bodyMedium?.copyWith(
+                                      color: Colors.grey,
                                     ),
                                   ),
-                                  onPressed: () => _showAddPlaylistDialog(context),
-                                ),
                               ],
                             ],
                           ),
@@ -518,23 +517,6 @@ class _HomeScreenState extends State<HomeScreen> with SingleTickerProviderStateM
           ),
         ],
       ),
-      floatingActionButton: playlistProvider.channels.isEmpty
-          ? ScaleTransition(
-              scale: _fabAnimation,
-              child: FloatingActionButton.extended(
-                onPressed: () => _showAddPlaylistDialog(context),
-                icon: const Icon(Icons.add),
-                label: const Text('Add Playlist'),
-              ),
-            )
-          : null,
-    );
-  }
-
-  void _showAddPlaylistDialog(BuildContext context) {
-    showDialog(
-      context: context,
-      builder: (context) => const AddPlaylistDialog(),
     );
   }
 }

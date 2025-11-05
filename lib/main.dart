@@ -35,12 +35,16 @@ void main(List<String> args) async {
       center: true,
       backgroundColor: Colors.transparent,
       skipTaskbar: false,
-      titleBarStyle: TitleBarStyle.normal,
+      titleBarStyle: TitleBarStyle.normal, // Use native title bar with native window controls
     );
     
     windowManager.waitUntilReadyToShow(windowOptions, () async {
       await windowManager.show();
       await windowManager.focus();
+      // Enable all window controls: minimize, maximize, close
+      await windowManager.setMinimizable(true);
+      await windowManager.setMaximizable(true);
+      await windowManager.setResizable(true);
     });
   }
   

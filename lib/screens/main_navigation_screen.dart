@@ -36,6 +36,22 @@ class _MainNavigationScreenState extends State<MainNavigationScreen> {
     super.initState();
     // Initialize ContentProvider with Xtream API client
     _initializeContentProvider();
+    
+    // Listen for playlist changes and reinitialize ContentProvider
+    final playlistProvider = Provider.of<PlaylistProvider>(context, listen: false);
+    playlistProvider.addListener(_onPlaylistsChanged);
+  }
+  
+  @override
+  void dispose() {
+    final playlistProvider = Provider.of<PlaylistProvider>(context, listen: false);
+    playlistProvider.removeListener(_onPlaylistsChanged);
+    super.dispose();
+  }
+  
+  void _onPlaylistsChanged() {
+    debugPrint('📋 Playlists changed, reinitializing ContentProvider...');
+    _initializeContentProvider();
   }
 
   Future<void> _initializeContentProvider() async {
