@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:media_kit/media_kit.dart';
 import 'package:media_kit_video/media_kit_video.dart';
 import '../models/channel.dart';
+import '../services/floating_window_service.dart';
 
 class PlayerProvider with ChangeNotifier {
   Player? _player;
@@ -66,6 +67,14 @@ class PlayerProvider with ChangeNotifier {
 
       await _player!.open(Media(channel.url));
       await _player!.play();
+      
+      // Update floating window if it's open
+      if (_isDetached && FloatingWindowService.isFloatingWindowOpen) {
+        await FloatingWindowService.updateStream(
+          streamUrl: channel.url,
+          channelName: channel.name,
+        );
+      }
     } catch (e) {
       print('Error playing channel: $e');
       _isBuffering = false;

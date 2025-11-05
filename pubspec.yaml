@@ -48,6 +48,9 @@ dependencies:
   
   # Window management (for always-on-top detached player)
   window_manager: ^0.3.9
+  
+  # Multi-window support for separate detached player window
+  desktop_multi_window: ^0.2.0
 
 dev_dependencies:
   flutter_test:

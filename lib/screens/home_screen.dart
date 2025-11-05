@@ -12,6 +12,7 @@ import '../widgets/mini_player.dart';
 import '../widgets/detached_player_window.dart';
 import '../utils/responsive.dart';
 import '../services/pip_service.dart';
+import '../services/floating_window_service.dart';
 import 'settings_screen.dart';
 
 class HomeScreen extends StatefulWidget {
@@ -59,7 +60,7 @@ class _HomeScreenState extends State<HomeScreen> with SingleTickerProviderStateM
     }
   }
 
-  void _toggleDetachedPlayer() {
+  Future<void> _toggleDetachedPlayer() async {
     final playerProvider = Provider.of<PlayerProvider>(context, listen: false);
     
     if (playerProvider.currentChannel == null) {
@@ -72,10 +73,45 @@ class _HomeScreenState extends State<HomeScreen> with SingleTickerProviderStateM
       return;
     }
 
-    setState(() {
-      _showDetachedPlayer = !_showDetachedPlayer;
-    });
-    playerProvider.setDetached(_showDetachedPlayer);
+    // For Windows/Desktop: Use true floating window with always-on-top
+    if ((Platform.isWindows || Platform.isMacOS || Platform.isLinux) && !_showDetachedPlayer) {
+      final success = await FloatingWindowService.openFloatingWindow(
+        streamUrl: playerProvider.currentChannel!.url,
+        channelName: playerProvider.currentChannel!.name,
+      );
+      
+      if (success) {
+        setState(() {
+          _showDetachedPlayer = true;
+        });
+        playerProvider.setDetached(true);
+        
+        if (mounted) {
+          ScaffoldMessenger.of(context).showSnackBar(
+            const SnackBar(
+              content: Text('Floating player opened (Always on top)'),
+              duration: Duration(seconds: 2),
+            ),
+          );
+        }
+      } else {
+        if (mounted) {
+          ScaffoldMessenger.of(context).showSnackBar(
+            const SnackBar(
+              content: Text('Failed to open floating player'),
+              duration: Duration(seconds: 2),
+            ),
+          );
+        }
+      }
+    } else if (_showDetachedPlayer) {
+      // Close the floating window
+      await FloatingWindowService.closeFloatingWindow();
+      setState(() {
+        _showDetachedPlayer = false;
+      });
+      playerProvider.setDetached(false);
+    }
   }
 
   Future<void> _enterPictureInPicture() async {
@@ -452,7 +488,7 @@ class _HomeScreenState extends State<HomeScreen> with SingleTickerProviderStateM
                           ),
                         ),
                 ),
-                // Detached player window
+                // Detached player window - floating overlay that stays on top
                 if (_showDetachedPlayer)
                   DetachedPlayerWindow(
                     onClose: _toggleDetachedPlayer,

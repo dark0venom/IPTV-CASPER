@@ -29,11 +29,26 @@ class _DetachedPlayerWindowState extends State<DetachedPlayerWindow> {
   @override
   void initState() {
     super.initState();
-    // Set always on top by default for detached player
+    // Set always on top by default for detached player - main window stays on top
     if (Platform.isWindows || Platform.isMacOS || Platform.isLinux) {
-      WidgetsBinding.instance.addPostFrameCallback((_) {
-        _setAlwaysOnTop(true);
+      WidgetsBinding.instance.addPostFrameCallback((_) async {
+        await _setAlwaysOnTop(true);
+        // Also prevent minimize to ensure it stays visible
+        await _setPreventClose(true);
       });
+    }
+  }
+
+  Future<void> _setPreventClose(bool prevent) async {
+    if (!Platform.isWindows && !Platform.isMacOS && !Platform.isLinux) {
+      return;
+    }
+    
+    try {
+      await windowManager.setPreventClose(prevent);
+      debugPrint('✅ Prevent close set to: $prevent');
+    } catch (e) {
+      debugPrint('❌ Error setting prevent close: $e');
     }
   }
 
@@ -43,30 +58,49 @@ class _DetachedPlayerWindowState extends State<DetachedPlayerWindow> {
     }
     
     try {
+      // Set the main window to always be on top of ALL other windows
       await windowManager.setAlwaysOnTop(alwaysOnTop);
+      
+      // For Windows, ensure it's above all system windows
+      if (Platform.isWindows && alwaysOnTop) {
+        // Bring to front to ensure it's visible
+        await windowManager.focus();
+        await windowManager.show();
+      }
+      
       if (mounted) {
         setState(() {
           _isAlwaysOnTop = alwaysOnTop;
         });
       }
-      debugPrint('✅ Always on top set to: $alwaysOnTop');
+      debugPrint('✅ Always on top set to: $alwaysOnTop (main window)');
     } catch (e) {
       debugPrint('❌ Error setting always on top: $e');
     }
   }
 
   Future<void> _toggleAlwaysOnTop() async {
-    await _setAlwaysOnTop(!_isAlwaysOnTop);
+    final newValue = !_isAlwaysOnTop;
+    await _setAlwaysOnTop(newValue);
+    // When disabling always on top, also disable prevent close
+    if (!newValue) {
+      await _setPreventClose(false);
+    } else {
+      await _setPreventClose(true);
+    }
   }
 
   @override
   void dispose() {
-    // Reset always on top when detached player is closed
+    // Reset always on top and prevent close when detached player is closed
     if (Platform.isWindows || Platform.isMacOS || Platform.isLinux) {
       windowManager.setAlwaysOnTop(false).then((_) {
         debugPrint('✅ Always on top disabled on dispose');
+        return windowManager.setPreventClose(false);
+      }).then((_) {
+        debugPrint('✅ Prevent close disabled on dispose');
       }).catchError((e) {
-        debugPrint('❌ Error resetting always on top: $e');
+        debugPrint('❌ Error resetting window manager: $e');
       });
     }
     super.dispose();
@@ -207,13 +241,14 @@ class _DetachedPlayerWindowState extends State<DetachedPlayerWindow> {
                                     size: 20,
                                   ),
                                   onPressed: () async {
-                                    // Reset always on top before closing
+                                    // Reset always on top and prevent close before closing
                                     if (Platform.isWindows || Platform.isMacOS || Platform.isLinux) {
                                       try {
                                         await windowManager.setAlwaysOnTop(false);
-                                        debugPrint('✅ Always on top disabled before close');
+                                        await windowManager.setPreventClose(false);
+                                        debugPrint('✅ Window manager reset before close');
                                       } catch (e) {
-                                        debugPrint('❌ Error resetting always on top: $e');
+                                        debugPrint('❌ Error resetting window manager: $e');
                                       }
                                     }
                                     widget.onClose?.call();

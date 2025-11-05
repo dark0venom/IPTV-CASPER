@@ -1,7 +1,9 @@
+import 'dart:io';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 import '../providers/settings_provider.dart';
 import '../providers/playlist_provider.dart';
+import '../widgets/floating_window_settings.dart';
 
 class SettingsScreen extends StatelessWidget {
   const SettingsScreen({super.key});
@@ -98,6 +100,20 @@ class SettingsScreen extends StatelessWidget {
             ),
           ),
           const SizedBox(height: 24),
+
+          // Floating Window Settings (Desktop only)
+          if (Platform.isWindows || Platform.isMacOS || Platform.isLinux) ...[
+            const Text(
+              'Floating Window',
+              style: TextStyle(
+                fontSize: 20,
+                fontWeight: FontWeight.bold,
+              ),
+            ),
+            const SizedBox(height: 12),
+            const FloatingWindowSettings(),
+            const SizedBox(height: 24),
+          ],
 
           // Playlist Management
           const Text(

@@ -3,6 +3,7 @@ import 'package:flutter/material.dart';
 import 'package:media_kit/media_kit.dart';
 import 'package:provider/provider.dart';
 import 'package:window_manager/window_manager.dart';
+import 'package:desktop_multi_window/desktop_multi_window.dart';
 import 'screens/main_navigation_screen.dart';
 import 'providers/playlist_provider.dart';
 import 'providers/player_provider.dart';
@@ -10,8 +11,17 @@ import 'providers/settings_provider.dart';
 import 'providers/content_provider.dart';
 import 'services/xtream_api_client.dart';
 import 'theme/app_theme.dart';
+import 'windows/detached_player_entry.dart' as detached_player;
 
-void main() async {
+void main(List<String> args) async {
+  // Check if this is a sub-window (detached player)
+  if (args.firstOrNull == 'multi_window') {
+    // This is a sub-window launched by DesktopMultiWindow
+    debugPrint('🔵 Main: Sub-window detected, launching detached player');
+    detached_player.main(args);
+    return;
+  }
+  
   WidgetsFlutterBinding.ensureInitialized();
   
   // Initialize MediaKit for video playback
