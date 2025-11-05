@@ -1,0 +1,44 @@
+MIT License
+
+Copyright (c) 2025 dark0venom
+
+Permission is hereby granted, free of charge, to any person obtaining a copy
+of this software and associated documentation files (the "Software"), to deal
+in the Software without restriction, including without limitation the rights
+to use, copy, modify, merge, publish, distribute, sublicense, and/or sell
+copies of the Software, and to permit persons to whom the Software is
+furnished to do so, subject to the following conditions:
+
+The above copyright notice and this permission notice shall be included in all
+copies or substantial portions of the Software.
+
+THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
+IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
+FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE
+AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER
+LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
+OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
+SOFTWARE.
+
+LEGAL DISCLAIMER
+================
+
+IPTV Casper is a media player application only. This software does not:
+- Provide any IPTV content or streams
+- Host any media content
+- Distribute any copyrighted material
+- Include any IPTV subscriptions or services
+
+Users are solely responsible for:
+- Ensuring they have legal rights to access any content they stream
+- Complying with local laws and regulations regarding content access
+- Obtaining proper licenses or subscriptions from content providers
+- Any misuse of the software
+
+The developers and contributors of IPTV Casper:
+- Do not endorse or promote piracy or copyright infringement
+- Are not liable for any misuse of this software
+- Do not provide technical support for illegal IPTV services
+- Are not responsible for the content accessed through this player
+
+By using this software, you acknowledge and agree to these terms.

@@ -1,5 +1,6 @@
 /// Cloudflare Connection Helper
 /// Provides utilities and guidance for connecting to Cloudflare-protected IPTV servers
+library;
 
 class CloudflareHelper {
   /// Generate alternative URL formats for Xtream Codes servers
@@ -30,8 +31,8 @@ class CloudflareHelper {
       '$cleanServer/xmltv.php?username=$encUsername&password=$encPassword',
       
       // Embedded credentials format
-      cleanServer.replaceFirst('://', '://$encUsername:$encPassword@') + '/playlist.m3u',
-      cleanServer.replaceFirst('://', '://$encUsername:$encPassword@') + '/get.php',
+      '${cleanServer.replaceFirst('://', '://$encUsername:$encPassword@')}/playlist.m3u',
+      '${cleanServer.replaceFirst('://', '://$encUsername:$encPassword@')}/get.php',
     ];
   }
   

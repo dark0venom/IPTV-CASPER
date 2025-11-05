@@ -64,7 +64,7 @@ class XtreamApiClient {
           'User-Agent': 'Lavf/58.76.100', // FFmpeg user agent (most compatible)
           'Accept': '*/*',
         },
-      ).timeout(Duration(seconds: 30));
+      ).timeout(const Duration(seconds: 30));
       
       print('   📥 Status: ${response.statusCode}');
       
@@ -138,7 +138,7 @@ class XtreamApiClient {
           'User-Agent': 'Lavf/58.76.100',
           'Accept': '*/*',
         },
-      ).timeout(Duration(seconds: 30));
+      ).timeout(const Duration(seconds: 30));
       
       if (response.statusCode != 200) {
         throw Exception('API returned status ${response.statusCode}');
@@ -177,7 +177,7 @@ class XtreamApiClient {
           'User-Agent': 'Lavf/58.76.100',
           'Accept': '*/*',
         },
-      ).timeout(Duration(seconds: 30));
+      ).timeout(const Duration(seconds: 30));
       
       if (response.statusCode != 200) {
         throw Exception('API returned status ${response.statusCode}');
@@ -226,7 +226,7 @@ class XtreamApiClient {
           'User-Agent': 'Lavf/58.76.100',
           'Accept': '*/*',
         },
-      ).timeout(Duration(seconds: 30));
+      ).timeout(const Duration(seconds: 30));
       
       if (response.statusCode != 200) {
         throw Exception('API returned status ${response.statusCode}');
@@ -281,7 +281,7 @@ class XtreamApiClient {
           'User-Agent': 'Lavf/58.76.100',
           'Accept': '*/*',
         },
-      ).timeout(Duration(seconds: 30));
+      ).timeout(const Duration(seconds: 30));
       
       if (response.statusCode != 200) {
         throw Exception('API returned status ${response.statusCode}');
@@ -345,7 +345,7 @@ class XtreamApiClient {
           'User-Agent': 'Lavf/58.76.100',
           'Accept': '*/*',
         },
-      ).timeout(Duration(seconds: 30));
+      ).timeout(const Duration(seconds: 30));
       
       if (response.statusCode != 200) {
         throw Exception('API returned status ${response.statusCode}');
@@ -384,7 +384,7 @@ class XtreamApiClient {
           'User-Agent': 'Lavf/58.76.100',
           'Accept': '*/*',
         },
-      ).timeout(Duration(seconds: 30));
+      ).timeout(const Duration(seconds: 30));
       
       if (response.statusCode != 200) {
         throw Exception('API returned status ${response.statusCode}');
@@ -433,7 +433,7 @@ class XtreamApiClient {
           'User-Agent': 'Lavf/58.76.100',
           'Accept': '*/*',
         },
-      ).timeout(Duration(seconds: 30));
+      ).timeout(const Duration(seconds: 30));
       
       if (response.statusCode != 200) {
         throw Exception('API returned status ${response.statusCode}');
@@ -538,7 +538,7 @@ class XtreamApiClient {
           'User-Agent': 'Lavf/58.76.100',
           'Accept': '*/*',
         },
-      ).timeout(Duration(seconds: 30));
+      ).timeout(const Duration(seconds: 30));
       
       if (response.statusCode != 200) {
         throw Exception('API returned status ${response.statusCode}');

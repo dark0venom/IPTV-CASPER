@@ -2,7 +2,7 @@ import 'package:http/http.dart' as http;
 
 /// Test direct connection bypassing CloudflareClient
 Future<void> main() async {
-  final url = 'http://cf.hi-ott.me/get.php?username=715a45eb20a3&password=e58b817450&type=m3u_plus';
+  const url = 'http://cf.hi-ott.me/get.php?username=715a45eb20a3&password=e58b817450&type=m3u_plus';
   
   print('🔍 Testing direct connection with package:http...\n');
   
@@ -14,7 +14,7 @@ Future<void> main() async {
       headers: {
         'User-Agent': 'VLC/3.0.20 LibVLC/3.0.20',
       },
-    ).timeout(Duration(seconds: 10));
+    ).timeout(const Duration(seconds: 10));
     print('✅ Status: ${response1.statusCode}');
     print('📦 Body length: ${response1.body.length} bytes');
     if (response1.statusCode == 200 && response1.body.isNotEmpty) {
@@ -34,7 +34,7 @@ Future<void> main() async {
         'User-Agent': 'VLC/3.0.20 LibVLC/3.0.20',
         'Accept': '*/*',
       },
-    ).timeout(Duration(seconds: 10));
+    ).timeout(const Duration(seconds: 10));
     print('✅ Status: ${response2.statusCode}');
     print('📦 Body length: ${response2.body.length} bytes');
     if (response2.statusCode == 200 && response2.body.isNotEmpty) {
@@ -54,7 +54,7 @@ Future<void> main() async {
         'User-Agent': 'LibVLC/3.0.16 (LIVE555 Streaming Media v2021.08.24)',
         'Accept': '*/*',
       },
-    ).timeout(Duration(seconds: 10));
+    ).timeout(const Duration(seconds: 10));
     print('✅ Status: ${response3.statusCode}');
     print('📦 Body length: ${response3.body.length} bytes');
     if (response3.statusCode == 200 && response3.body.isNotEmpty) {
@@ -74,7 +74,7 @@ Future<void> main() async {
         'User-Agent': 'IPTV Smarters Pro/3.0.9.4',
         'Accept': '*/*',
       },
-    ).timeout(Duration(seconds: 10));
+    ).timeout(const Duration(seconds: 10));
     print('✅ Status: ${response4.statusCode}');
     print('📦 Body length: ${response4.body.length} bytes');
     if (response4.statusCode == 200 && response4.body.isNotEmpty) {

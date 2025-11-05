@@ -221,7 +221,7 @@ class _MoviesScreenState extends State<MoviesScreen> {
 
   Widget _buildMovieGrid(List<VodItem> movies, {required bool isDesktop, required bool isTablet}) {
     final crossAxisCount = isDesktop ? 6 : (isTablet ? 4 : 3);
-    final aspectRatio = 2 / 3; // Movie poster aspect ratio
+    const aspectRatio = 2 / 3; // Movie poster aspect ratio
 
     return GridView.builder(
       padding: const EdgeInsets.all(16),

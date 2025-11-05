@@ -3,12 +3,12 @@ import 'dart:convert';
 
 /// Test TiviMate-style ultra-minimal headers
 Future<void> main() async {
-  final url = 'http://cf.hi-ott.me/get.php?username=715a45eb20a3&password=e58b817450&type=m3u_plus';
+  const url = 'http://cf.hi-ott.me/get.php?username=715a45eb20a3&password=e58b817450&type=m3u_plus';
   
   print('🔍 Testing TiviMate-style connection...\n');
   
   final client = HttpClient();
-  client.connectionTimeout = Duration(seconds: 30);
+  client.connectionTimeout = const Duration(seconds: 30);
   client.badCertificateCallback = (cert, host, port) => true;
   client.autoUncompress = false; // CRITICAL: Disable auto-compression
   
@@ -34,7 +34,7 @@ Future<void> main() async {
       request.headers.set(HttpHeaders.userAgentHeader, ua);
       request.headers.set(HttpHeaders.acceptHeader, '*/*');
       
-      final response = await request.close().timeout(Duration(seconds: 10));
+      final response = await request.close().timeout(const Duration(seconds: 10));
       
       final chunks = <int>[];
       await for (var chunk in response) {
@@ -81,7 +81,7 @@ Future<void> main() async {
       print('   ❌ Error: $e\n');
     }
     
-    await Future.delayed(Duration(milliseconds: 100));
+    await Future.delayed(const Duration(milliseconds: 100));
   }
   
   print('❌ All TiviMate-style attempts failed');

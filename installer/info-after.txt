@@ -1,0 +1,62 @@
+IPTV Casper Installation Complete!
+===================================
+
+Thank you for installing IPTV Casper v1.0.0
+
+What's Next?
+------------
+
+1. Launch IPTV Casper:
+   - Click Finish to launch the application now
+   - Or find it in your Start Menu
+
+2. Getting Started:
+   - Add your M3U playlist or Xtream Codes credentials
+   - Browse channels and start watching
+   - Try the Floating Window feature for multitasking
+
+3. Floating Window (Picture-in-Picture):
+   - Play any channel or video
+   - Click the PiP button (top-right corner)
+   - Use the pin button to keep window always on top
+   - Continue working while watching!
+
+Quick Tips:
+-----------
+  * Desktop Shortcut: Created (if selected)
+  * Start Menu: Find under "IPTV Casper"
+  * Keyboard Shortcuts: Space (play/pause), F (fullscreen), M (mute)
+  * Floating Window: Perfect for watching while working
+
+Need Help?
+----------
+  * User Guide: Check the README in installation folder
+  * GitHub: https://github.com/dark0venom/IPTV-CASPER
+  * Issues: https://github.com/dark0venom/IPTV-CASPER/issues
+  * Documentation: See the installed markdown files
+
+Features to Explore:
+--------------------
+  [✓] Live TV Streaming
+  [✓] Video on Demand (VOD)
+  [✓] TV Series
+  [✓] Floating Window
+  [✓] Always-on-Top Mode
+  [✓] Multiple Stream Formats
+  [✓] Modern UI Design
+
+Legal Notice:
+-------------
+IPTV Casper is a media player. Users are responsible for ensuring
+they have the right to access any content they stream. The developers
+do not provide, host, or distribute any IPTV content.
+
+Support the Project:
+--------------------
+  * Star on GitHub: https://github.com/dark0venom/IPTV-CASPER
+  * Report bugs and suggest features
+  * Share with others who might find it useful
+
+Thank you for choosing IPTV Casper!
+
+Click Finish to exit Setup and launch the application.

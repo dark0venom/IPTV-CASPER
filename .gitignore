@@ -45,3 +45,25 @@ app.*.map.json
 
 # Windows related
 windows/flutter/ephemeral/
+
+# Production builds and distribution
+production-release/
+installer-output/
+*.zip
+*.exe
+
+# Generated icons (keep source, ignore generated)
+assets/images/app_icon_*.png
+assets/images/app_icon.ico
+
+# Python cache
+__pycache__/
+*.py[cod]
+*$py.class
+
+# Temporary files
+*.tmp
+*.temp
+*.bak
+*.swp
+*~

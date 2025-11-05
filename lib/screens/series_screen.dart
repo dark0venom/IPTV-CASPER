@@ -213,7 +213,7 @@ class _SeriesScreenState extends State<SeriesScreen> {
 
   Widget _buildSeriesGrid(List<SeriesItem> series, {required bool isDesktop, required bool isTablet}) {
     final crossAxisCount = isDesktop ? 6 : (isTablet ? 4 : 3);
-    final aspectRatio = 2 / 3; // Series poster aspect ratio
+    const aspectRatio = 2 / 3; // Series poster aspect ratio
 
     return GridView.builder(
       padding: const EdgeInsets.all(16),

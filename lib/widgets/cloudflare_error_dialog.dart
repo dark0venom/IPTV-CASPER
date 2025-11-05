@@ -17,11 +17,11 @@ class CloudflareErrorDialog extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return AlertDialog(
-      title: Row(
+      title: const Row(
         children: [
           Icon(Icons.error_outline, color: Colors.orange, size: 28),
-          const SizedBox(width: 12),
-          const Text('Authentication Failed'),
+          SizedBox(width: 12),
+          Text('Authentication Failed'),
         ],
       ),
       content: SizedBox(
@@ -42,11 +42,11 @@ class CloudflareErrorDialog extends StatelessWidget {
                 child: Column(
                   crossAxisAlignment: CrossAxisAlignment.start,
                   children: [
-                    Row(
+                    const Row(
                       children: [
                         Icon(Icons.shield, color: Colors.red, size: 20),
-                        const SizedBox(width: 8),
-                        const Text(
+                        SizedBox(width: 8),
+                        Text(
                           'Cloudflare Error 884',
                           style: TextStyle(
                             fontWeight: FontWeight.bold,

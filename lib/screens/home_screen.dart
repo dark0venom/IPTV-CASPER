@@ -287,6 +287,26 @@ class _HomeScreenState extends State<HomeScreen> with SingleTickerProviderStateM
     // Tablet & Desktop layout
     return Scaffold(
       appBar: AppBar(
+        leading: Padding(
+          padding: const EdgeInsets.all(8.0),
+          child: Container(
+            decoration: BoxDecoration(
+              gradient: const LinearGradient(
+                begin: Alignment.topLeft,
+                end: Alignment.bottomRight,
+                colors: [
+                  Color(0xFF2196F3),
+                  Color(0xFF9C27B0),
+                ],
+              ),
+              borderRadius: BorderRadius.circular(8),
+            ),
+            child: const Icon(
+              Icons.live_tv_rounded,
+              color: Colors.white,
+            ),
+          ),
+        ),
         title: const Text('IPTV Casper'),
         actions: [
           if (playerProvider.currentChannel != null) ...[

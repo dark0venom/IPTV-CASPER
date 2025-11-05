@@ -527,11 +527,11 @@ class _AddPlaylistDialogState extends State<AddPlaylistDialog> with SingleTicker
           showDialog(
             context: context,
             builder: (context) => AlertDialog(
-              title: Row(
+              title: const Row(
                 children: [
                   Icon(Icons.error_outline, color: Colors.orange, size: 28),
-                  const SizedBox(width: 12),
-                  const Text('Authentication Failed'),
+                  SizedBox(width: 12),
+                  Text('Authentication Failed'),
                 ],
               ),
               content: SizedBox(
@@ -551,11 +551,11 @@ class _AddPlaylistDialogState extends State<AddPlaylistDialog> with SingleTicker
                         child: Column(
                           crossAxisAlignment: CrossAxisAlignment.start,
                           children: [
-                            Row(
+                            const Row(
                               children: [
                                 Icon(Icons.shield, color: Colors.red, size: 20),
-                                const SizedBox(width: 8),
-                                const Text(
+                                SizedBox(width: 8),
+                                Text(
                                   'Cloudflare Error 884',
                                   style: TextStyle(fontWeight: FontWeight.bold),
                                 ),
@@ -580,9 +580,9 @@ class _AddPlaylistDialogState extends State<AddPlaylistDialog> with SingleTicker
                         ),
                       ),
                       const SizedBox(height: 16),
-                      Text(
+                      const Text(
                         'Your Details:',
-                        style: const TextStyle(fontWeight: FontWeight.bold),
+                        style: TextStyle(fontWeight: FontWeight.bold),
                       ),
                       const SizedBox(height: 8),
                       Text('Server: $serverUrl', style: const TextStyle(fontSize: 13)),

@@ -56,6 +56,7 @@ dev_dependencies:
   flutter_test:
     sdk: flutter
   flutter_lints: ^3.0.1
+  flutter_launcher_icons: ^0.13.1
 
 flutter:
   uses-material-design: true
@@ -63,5 +64,30 @@ flutter:
   # Add app icons for different platforms
   assets:
     - assets/images/
+    - assets/images/logo.png
+    - assets/images/logo_small.png
   
   # Platform-specific configurations will be in platform folders
+
+# Flutter Launcher Icons configuration
+# Run: flutter pub run flutter_launcher_icons
+flutter_launcher_icons:
+  android: true
+  ios: true
+  # Uncomment and add your icon file when ready:
+  # image_path: "assets/images/app_icon.png"
+  # image_path_android: "assets/images/app_icon_android.png"
+  # image_path_ios: "assets/images/app_icon_ios.png"
+  windows:
+    generate: true
+    # image_path: "assets/images/app_icon.png"
+    icon_size: 256
+  macos:
+    generate: true
+    # image_path: "assets/images/app_icon.png"
+  linux:
+    generate: true
+    # image_path: "assets/images/app_icon.png"
+  web:
+    generate: true
+    # image_path: "assets/images/app_icon.png"

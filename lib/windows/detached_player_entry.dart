@@ -1,5 +1,4 @@
 import 'dart:io';
-import 'dart:ui';
 import 'package:flutter/material.dart';
 import 'package:desktop_multi_window/desktop_multi_window.dart';
 import 'package:media_kit/media_kit.dart';
@@ -253,10 +252,26 @@ class _DetachedPlayerAppState extends State<DetachedPlayerApp> {
                           padding: const EdgeInsets.symmetric(horizontal: 12),
                           child: Row(
                             children: [
-                              const Icon(
-                                Icons.live_tv,
-                                color: Colors.white70,
-                                size: 20,
+                              // App logo
+                              Container(
+                                width: 24,
+                                height: 24,
+                                decoration: BoxDecoration(
+                                  gradient: const LinearGradient(
+                                    begin: Alignment.topLeft,
+                                    end: Alignment.bottomRight,
+                                    colors: [
+                                      Color(0xFF2196F3),
+                                      Color(0xFF9C27B0),
+                                    ],
+                                  ),
+                                  borderRadius: BorderRadius.circular(4),
+                                ),
+                                child: const Icon(
+                                  Icons.live_tv_rounded,
+                                  size: 16,
+                                  color: Colors.white,
+                                ),
                               ),
                               const SizedBox(width: 12),
                               Expanded(

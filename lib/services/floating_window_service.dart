@@ -49,7 +49,7 @@ class FloatingWindowService {
       _floatingWindowId = window.windowId;
 
       // Configure the window
-      await window
+      window
         ..setFrame(const Offset(100, 100) & Size(width, height))
         ..setTitle('$channelName - IPTV Casper')
         ..center()
@@ -90,7 +90,7 @@ class FloatingWindowService {
     }
 
     try {
-      debugPrint('🟡 Closing floating window ${_floatingWindowId}...');
+      debugPrint('🟡 Closing floating window $_floatingWindowId...');
       
       final controller = WindowController.fromWindowId(_floatingWindowId!);
       await controller.close();

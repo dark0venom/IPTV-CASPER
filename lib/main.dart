@@ -3,13 +3,11 @@ import 'package:flutter/material.dart';
 import 'package:media_kit/media_kit.dart';
 import 'package:provider/provider.dart';
 import 'package:window_manager/window_manager.dart';
-import 'package:desktop_multi_window/desktop_multi_window.dart';
 import 'screens/main_navigation_screen.dart';
 import 'providers/playlist_provider.dart';
 import 'providers/player_provider.dart';
 import 'providers/settings_provider.dart';
 import 'providers/content_provider.dart';
-import 'services/xtream_api_client.dart';
 import 'theme/app_theme.dart';
 import 'windows/detached_player_entry.dart' as detached_player;
 

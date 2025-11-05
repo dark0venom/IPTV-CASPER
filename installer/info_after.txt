@@ -1,0 +1,72 @@
+Thank you for installing IPTV Casper!
+
+INSTALLATION COMPLETE
+=====================
+
+IPTV Casper has been successfully installed on your computer.
+
+GETTING STARTED:
+----------------
+
+1. Launch IPTV Casper from:
+   • Desktop icon (if created)
+   • Start Menu > IPTV Casper
+   • Or double-click any .m3u/.m3u8 file
+
+2. Load Your IPTV Content:
+   • Click "Add Playlist" to import an M3U file
+   • Or click "Add Provider" for Xtream Codes
+   • Enter your server details and credentials
+
+3. Start Watching:
+   • Browse categories in the sidebar
+   • Click any channel to start playing
+   • Use the PiP button for floating window mode
+
+FLOATING WINDOW FEATURE:
+------------------------
+To use the Picture-in-Picture floating window:
+1. Start playing any channel
+2. Click the PiP button (floating window icon)
+3. Click the pin button to enable always-on-top
+4. Continue using other apps while watching!
+
+KEYBOARD SHORTCUTS:
+-------------------
+Space    - Play/Pause
+F        - Fullscreen
+M        - Mute/Unmute
+←/→      - Seek backward/forward
+↑/↓      - Volume up/down
+Esc      - Exit fullscreen
+
+DOCUMENTATION:
+--------------
+Documentation files have been installed in:
+Program Files\IPTV Casper\docs\
+
+Online documentation and support:
+https://github.com/dark0venom/IPTV-CASPER
+
+SUPPORT:
+--------
+• Report Issues: https://github.com/dark0venom/IPTV-CASPER/issues
+• Check for Updates: https://github.com/dark0venom/IPTV-CASPER/releases
+• View Changelog: See docs\CHANGELOG.md
+
+WHAT'S NEW IN v1.0.0:
+---------------------
+✓ Initial release with full IPTV functionality
+✓ Floating window with always-on-top feature
+✓ Custom branding and professional design
+✓ M3U and Xtream Codes support
+✓ Live TV, VOD, and Series support
+
+PRIVACY:
+--------
+IPTV Casper does not collect any personal data. Your playlists and
+credentials are stored locally on your computer only.
+
+Enjoy IPTV Casper!
+
+Click Finish to close the installer and launch the application.

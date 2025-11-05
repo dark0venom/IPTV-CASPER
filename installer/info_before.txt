@@ -1,0 +1,38 @@
+Welcome to IPTV Casper Setup!
+
+This wizard will guide you through the installation of IPTV Casper v1.0.0.
+
+IPTV Casper is a professional IPTV player for Windows with advanced features:
+
+✓ M3U Playlist Support
+✓ Xtream Codes API Integration
+✓ Live TV Streaming
+✓ Video on Demand (VOD)
+✓ TV Series Support
+✓ Floating Window (Picture-in-Picture)
+✓ Always-on-Top Mode
+✓ Modern User Interface
+
+SYSTEM REQUIREMENTS:
+--------------------
+• Windows 10 or Windows 11 (64-bit)
+• 4GB RAM minimum (8GB recommended)
+• Internet connection
+• Graphics card with hardware acceleration
+
+FEATURES:
+---------
+• Floating Window: Watch IPTV while working with other applications
+• Always-on-Top: Pin the video window to stay visible
+• Multi-Format Support: HLS, RTMP, HTTP/HTTPS streams
+• Modern Interface: Easy-to-use design with quick access controls
+• Playlist Management: Import and organize your channels
+• Search & Browse: Find content quickly with category browsing
+
+LEGAL NOTICE:
+-------------
+This application is a media player only. Users are responsible for ensuring
+they have the right to access any content they stream. The developers do not
+provide, host, or distribute any IPTV content.
+
+Click Next to continue, or Cancel to exit Setup.
