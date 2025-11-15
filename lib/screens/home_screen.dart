@@ -345,6 +345,11 @@ class _HomeScreenState extends State<HomeScreen> with SingleTickerProviderStateM
                 tooltip: 'Picture-in-Picture',
               ),
             IconButton(
+              icon: const Icon(Icons.fullscreen),
+              onPressed: _toggleFullScreen,
+              tooltip: 'Fullscreen',
+            ),
+            IconButton(
               icon: const Icon(Icons.refresh),
               onPressed: () {
                 if (playerProvider.currentChannel != null) {

@@ -2,6 +2,99 @@
 
 All notable changes to IPTV Casper will be documented in this file.
 
+## [1.1.0] - 2025-11-14
+
+### 🎉 Major Feature Update
+
+#### ✨ New Features
+
+- **📺 Electronic Program Guide (EPG)**
+  - Full EPG integration with XMLTV format support
+  - Current and upcoming program information
+  - Program schedule timeline view
+  - Integration with Xtream Codes EPG API
+  - Real-time program progress indicators
+  - Catch-up availability indicators
+
+- **⏮️ Catch-up TV**
+  - Watch previously aired programs
+  - Timeline-based navigation
+  - Integration with EPG data
+  - Rewind to start of current program
+  - Access to archived content
+
+- **🔴 Recording Capability**
+  - Schedule recordings based on EPG
+  - Record live streams to local files
+  - Multiple quality settings (Low, Medium, High, Original)
+  - Recording management interface
+  - Automatic scheduled recording start/stop
+  - Recording library with playback
+  - FFmpeg-based stream capture
+
+- **🌍 Multi-language Support (i18n)**
+  - Full internationalization support
+  - English (en)
+  - Spanish (es)
+  - French (fr)
+  - German (de)
+  - Arabic (ar) with RTL support
+  - Easy language switching in settings
+  - Localized UI strings throughout app
+
+- **🎨 Theme Customization**
+  - 6 predefined theme presets
+    - IPTV Casper (Default)
+    - Modern Dark
+    - Ocean Blue
+    - Forest Green
+    - Sunset Orange
+    - Midnight Purple
+  - Custom theme creation
+  - Light and dark theme variants
+  - Theme preview before applying
+  - Per-theme color customization
+
+- **⌨️ Keyboard Shortcuts**
+  - Configurable keyboard shortcuts
+  - Default shortcuts for common actions
+  - Categories: Playback, Navigation, Window, General
+  - Customizable key combinations
+  - Shortcut conflict detection
+  - Visual shortcut editor
+  - Quick reference guide
+
+- **👨‍👩‍👧 Parental Controls**
+  - PIN-based access control
+  - Content rating filtering (G, PG, PG-13, R, NC-17)
+  - Channel blocking by ID or category
+  - Time-based viewing restrictions
+  - Day-of-week scheduling
+  - Protected settings access
+  - Adult content warnings
+
+#### 🔧 Technical Improvements
+- Riverpod state management integration
+- Enhanced error handling
+- Improved caching mechanisms
+- Better memory management for EPG data
+- Optimized recording process handling
+- Secure storage for parental control PINs
+
+#### 📦 Dependencies Updated
+- Added `flutter_localizations` for i18n
+- Added `intl` for date/time formatting
+- Added `xml` package for XMLTV parsing
+- Updated to version 1.1.0+2
+
+#### 📚 Documentation
+- Updated README with new features
+- Added feature documentation
+- Updated user guides
+- API documentation for new services
+
+---
+
 ## [1.0.0] - 2025-11-04
 
 ### 🎉 Initial Release

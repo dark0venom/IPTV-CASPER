@@ -1,7 +1,7 @@
 name: iptv_casper
 description: A modern cross-platform IPTV player built with Flutter
 publish_to: 'none'
-version: 1.0.0+1
+version: 1.1.0+2
 
 environment:
   sdk: '>=3.0.0 <4.0.0'
@@ -9,6 +9,9 @@ environment:
 dependencies:
   flutter:
     sdk: flutter
+  flutter_localizations:
+    sdk: flutter
+  intl: any
   
   # Video player packages - cross-platform support
   media_kit: ^1.1.10
@@ -51,6 +54,9 @@ dependencies:
   
   # Multi-window support for separate detached player window
   desktop_multi_window: ^0.2.0
+  
+  # XML parsing for EPG
+  xml: ^6.5.0
 
 dev_dependencies:
   flutter_test:
@@ -60,6 +66,9 @@ dev_dependencies:
 
 flutter:
   uses-material-design: true
+  
+  # Localization
+  generate: true
   
   # Add app icons for different platforms
   assets:

@@ -1,5 +1,6 @@
 import 'dart:io';
 import 'package:flutter/material.dart';
+import 'package:flutter_localizations/flutter_localizations.dart';
 import 'package:media_kit/media_kit.dart';
 import 'package:provider/provider.dart';
 import 'package:window_manager/window_manager.dart';
@@ -68,9 +69,26 @@ class MyApp extends StatelessWidget {
           return MaterialApp(
             title: 'IPTV Casper',
             debugShowCheckedModeBanner: false,
+            
+            // Localization support
+            localizationsDelegates: const [
+              GlobalMaterialLocalizations.delegate,
+              GlobalWidgetsLocalizations.delegate,
+              GlobalCupertinoLocalizations.delegate,
+            ],
+            supportedLocales: const [
+              Locale('en'), // English
+              Locale('es'), // Spanish
+              Locale('fr'), // French
+              Locale('de'), // German
+              Locale('ar'), // Arabic
+            ],
+            
+            // Theme configuration
             themeMode: settings.isDarkMode ? ThemeMode.dark : ThemeMode.light,
             theme: AppTheme.lightTheme,
             darkTheme: AppTheme.darkTheme,
+            
             home: MainNavigationScreen(key: mainNavigationKey),
           );
         },

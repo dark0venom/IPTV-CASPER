@@ -56,6 +56,48 @@ A modern, **professional-grade cross-platform IPTV player** built with Flutter, 
 - 🔄 **Auto-Reconnect** - Smart connection recovery
 - 📱 **Multiple Playlists** - Manage multiple IPTV providers
 
+### 📺 Electronic Program Guide (EPG) **[NEW in v1.1.0]**
+- 📅 **Full EPG Support** - XMLTV and Xtream Codes EPG integration
+- 🎬 **Program Information** - Current and upcoming shows with descriptions
+- ⏱️ **Live Progress** - Real-time progress bars for current programs
+- 📖 **Program Details** - Episode info, cast, ratings, and more
+- ⏮️ **Catch-up Indicators** - See which programs support time-shifting
+
+### 🔴 Recording & Catch-up **[NEW in v1.1.0]**
+- ⏺️ **Stream Recording** - Record live TV to local files
+- 📅 **Scheduled Recording** - EPG-based automatic recording
+- 🎥 **Quality Selection** - Choose from Low, Medium, High, or Original quality
+- 📼 **Recording Library** - Manage and playback your recordings
+- ⏮️ **Catch-up TV** - Watch previously aired programs
+- 🕐 **Time-shift** - Rewind to program start
+
+### 🌍 Multi-language Support **[NEW in v1.1.0]**
+- 🇬🇧 **English** - Full UI translation
+- 🇪🇸 **Spanish** - Traducción completa
+- 🇫🇷 **French** - Traduction complète
+- 🇩🇪 **German** - Vollständige Übersetzung
+- 🇸🇦 **Arabic** - ترجمة كاملة مع دعم RTL
+- 🔄 **Easy Switching** - Change language on the fly
+
+### 🎨 Theme Customization **[NEW in v1.1.0]**
+- 🌈 **6 Theme Presets** - IPTV Casper, Modern Dark, Ocean, Forest, Sunset, Midnight
+- 🎨 **Custom Themes** - Create your own color schemes
+- 🌓 **Light & Dark** - Each theme has light and dark variants
+- 👁️ **Live Preview** - See themes before applying
+
+### ⌨️ Keyboard Shortcuts **[NEW in v1.1.0]**
+- ⚡ **Fully Configurable** - Customize all keyboard shortcuts
+- 🎮 **Default Shortcuts** - Intuitive defaults for playback, navigation, window control
+- 🔧 **Visual Editor** - Easy-to-use shortcut configuration
+- 📝 **Quick Reference** - Built-in shortcut guide
+
+### 👨‍👩‍👧 Parental Controls **[NEW in v1.1.0]**
+- 🔒 **PIN Protection** - Secure with 4-digit PIN
+- 🎬 **Content Ratings** - Filter by G, PG, PG-13, R, NC-17
+- 🚫 **Channel Blocking** - Block specific channels or categories
+- ⏰ **Time Restrictions** - Limit viewing times by day of week
+- 🔐 **Protected Settings** - Require PIN for settings access
+
 ## 🚀 Quick Start
 
 ### For Users (Pre-built Release)
@@ -209,16 +251,18 @@ See [MULTIPLATFORM.md](MULTIPLATFORM.md) for detailed build instructions and [PR
 
 ## 📊 Project Statistics
 
-- **Version**: 1.0.0
-- **Lines of Code**: 10,000+ (estimated)
+- **Version**: 1.1.0
+- **Lines of Code**: 15,000+ (estimated)
 - **Platforms**: 6 (Windows, macOS, Linux, Android, iOS, Web)
-- **Features**: 30+ major features
-- **Dependencies**: 20+ packages
+- **Features**: 45+ major features
+- **Dependencies**: 23+ packages
+- **Languages**: 5 (English, Spanish, French, German, Arabic)
+- **Themes**: 6 predefined + custom
 - **Documentation**: 15+ comprehensive guides
 
 ## 🎯 Roadmap
 
-### Current Release (v1.0.0)
+### Current Release (v1.1.0) **[LATEST]**
 - ✅ Cross-platform IPTV playback
 - ✅ Xtream Codes API integration
 - ✅ Floating window with always-on-top
@@ -226,17 +270,24 @@ See [MULTIPLATFORM.md](MULTIPLATFORM.md) for detailed build instructions and [PR
 - ✅ Dark/Light theme support
 - ✅ Favorites and search
 - ✅ VOD and Series support
+- ✅ **Electronic Program Guide (EPG)**
+- ✅ **Catch-up TV functionality**
+- ✅ **Recording capability**
+- ✅ **Multi-language support (5 languages)**
+- ✅ **Theme customization (6 presets + custom)**
+- ✅ **Keyboard shortcuts configuration**
+- ✅ **Parental controls**
 
-### Planned Features
-- 📅 Electronic Program Guide (EPG) integration
-- 🔁 Catch-up TV functionality
-- 📹 Recording capability
-- 🌐 Multi-language support (i18n)
-- 🎨 Theme customization
-- ⌨️ Keyboard shortcuts configuration
-- 👨‍👩‍👧 Parental controls
+### Planned Features (v1.2.0+)
 - ☁️ Cloud sync for settings and favorites
 - 🔌 Plugin system for extensions
+- 📊 Advanced statistics and analytics
+- 🎯 Recommended content based on viewing history
+- 🌐 More language translations
+- 📱 Mobile-specific features (gestures, notifications)
+- 🎭 Channel grouping and custom categories
+- 📻 Radio station support
+- 🔄 Automatic playlist updates
 
 ## 🤝 Contributing
 
